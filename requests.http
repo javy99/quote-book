@@ -1,0 +1,20 @@
+### Add a new quote
+POST http://localhost:8080/quotes
+Content-Type: application/json
+
+{
+  "author": "Confucius",
+  "quote": "Life is simple, but we insist on making it complicated."
+}
+
+### Get all quotes
+GET http://localhost:8080/quotes
+
+### Get quotes by author
+GET http://localhost:8080/quotes?author=Confucius
+
+### Get a random quote
+GET http://localhost:8080/quotes/random
+
+### Delete a quote by ID
+DELETE http://localhost:8080/quotes/1
