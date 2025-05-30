@@ -20,7 +20,16 @@ func NewQuoteHandler(store *storage.MemoryStore) *QuoteHandler {
 	return &QuoteHandler{Store: store}
 }
 
-// CreateQuote handles the creation of a new quote.
+// CreateQuote godoc
+// @Summary Add a new quote
+// @Description Add a quote by providing author and quote text
+// @Tags quotes
+// @Accept json
+// @Produce json
+// @Param quote body model.Quote true "Quote object"
+// @Success 201 {object} model.Quote
+// @Failure 400 {string} string "Invalid input"
+// @Router /quotes [post]
 func (h *QuoteHandler) CreateQuote(w http.ResponseWriter, r *http.Request) {
 	var quote model.Quote
 	if err := json.NewDecoder(r.Body).Decode(&quote); err != nil {
@@ -32,7 +41,14 @@ func (h *QuoteHandler) CreateQuote(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(saved)
 }
 
-// GetQuotes retrieves all quotes or filters them by author if they 'author' query parameter is provided.
+// GetQuotes godoc
+// @Summary Get all quotes
+// @Description Retrieve all quotes or filter by author using query parameter
+// @Tags quotes
+// @Produce json
+// @Param author query string false "Author filter"
+// @Success 200 {array} model.Quote
+// @Router /quotes [get]
 func (h *QuoteHandler) GetQuotes(w http.ResponseWriter, r *http.Request) {
 	author := r.URL.Query().Get("author")
 	var quotes []model.Quote
@@ -44,7 +60,14 @@ func (h *QuoteHandler) GetQuotes(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(quotes)
 }
 
-// GetRandomQuote retrieves a random quote from the store.
+// GetRandomQuote godoc
+// @Summary Get a random quote
+// @Description Retrieve one random quote from the store
+// @Tags quotes
+// @Produce json
+// @Success 200 {object} model.Quote
+// @Failure 404 {string} string "No quotes found"
+// @Router /quotes/random [get]
 func (h *QuoteHandler) GetRandomQuote(w http.ResponseWriter, r *http.Request) {
 	quote, err := h.Store.GetRandom()
 	if err != nil {
@@ -54,7 +77,15 @@ func (h *QuoteHandler) GetRandomQuote(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(quote)
 }
 
-// DeleteQuote deletes a quote by its ID.
+// DeleteQuote godoc
+// @Summary Delete a quote by ID
+// @Description Remove a quote by its numeric ID
+// @Tags quotes
+// @Param id path int true "Quote ID"
+// @Success 204 {string} string "No Content"
+// @Failure 400 {string} string "Invalid ID"
+// @Failure 404 {string} string "Quote not found"
+// @Router /quotes/{id} [delete]
 func (h *QuoteHandler) DeleteQuote(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 	if len(parts) < 3 {

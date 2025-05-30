@@ -1,8 +1,16 @@
 package model
 
-// Quote represents a quote entry with an ID, author, and the quote text.
+// Quote represents a quote entry with an ID, author, and quote text.
+// It is used in JSON requests and responses.
+// swagger:model
 type Quote struct {
-	ID     int    `json:"id"`
+	// ID is the unique identifier of the quote.
+	// example: 1
+	ID int `json:"id"`
+	// Author is the name of the person who said the quote.
+	// example: Albert Einstein
 	Author string `json:"author"`
-	Quote  string `json:"quote"`
+	// Quote is the text of the quote.
+	// example: Life is like riding a bicycle. To keep your balance, you must keep moving.
+	Quote string `json:"quote"`
 }

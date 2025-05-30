@@ -53,7 +53,8 @@ func (s *MemoryStore) GetByAuthor(author string) []model.Quote {
 	return filtered
 }
 
-// GetRandom retrieves a random quote from the store.
+// GetRandom returns a randomly selected quote from the store.
+// Returns an error if no quotes are available.
 func (s *MemoryStore) GetRandom() (model.Quote, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -63,7 +64,8 @@ func (s *MemoryStore) GetRandom() (model.Quote, error) {
 	return s.quotes[rand.Intn(len(s.quotes))], nil
 }
 
-// DeleteByID removes a quote by its ID from the store.
+// DeleteByID removes a quote with the specified ID from the store.
+// Returns true if the quote was found and deleted, false otherwise.
 func (s *MemoryStore) DeleteByID(id int) bool {
 	s.mu.Lock()
 	defer s.mu.Unlock()

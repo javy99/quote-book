@@ -1,0 +1,115 @@
+basePath: /
+definitions:
+  model.Quote:
+    properties:
+      author:
+        description: |-
+          Author is the name of the person who said the quote.
+          example: Albert Einstein
+        type: string
+      id:
+        description: |-
+          ID is the unique identifier of the quote.
+          example: 1
+        type: integer
+      quote:
+        description: |-
+          Quote is the text of the quote.
+          example: Life is like riding a bicycle. To keep your balance, you must keep moving.
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: REST API for managing quotes
+  title: Quote API
+  version: "1.0"
+paths:
+  /quotes:
+    get:
+      description: Retrieve all quotes or filter by author using query parameter
+      parameters:
+      - description: Author filter
+        in: query
+        name: author
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Quote'
+            type: array
+      summary: Get all quotes
+      tags:
+      - quotes
+    post:
+      consumes:
+      - application/json
+      description: Add a quote by providing author and quote text
+      parameters:
+      - description: Quote object
+        in: body
+        name: quote
+        required: true
+        schema:
+          $ref: '#/definitions/model.Quote'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Quote'
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+      summary: Add a new quote
+      tags:
+      - quotes
+  /quotes/{id}:
+    delete:
+      description: Remove a quote by its numeric ID
+      parameters:
+      - description: Quote ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Invalid ID
+          schema:
+            type: string
+        "404":
+          description: Quote not found
+          schema:
+            type: string
+      summary: Delete a quote by ID
+      tags:
+      - quotes
+  /quotes/random:
+    get:
+      description: Retrieve one random quote from the store
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Quote'
+        "404":
+          description: No quotes found
+          schema:
+            type: string
+      summary: Get a random quote
+      tags:
+      - quotes
+swagger: "2.0"
