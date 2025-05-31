@@ -128,6 +128,34 @@ curl -X DELETE http://localhost:8080/quotes/1
 
 ---
 
+## 🧪 Running Tests
+
+Unit tests are placed next to their corresponding source files.
+
+### ▶️ Run All Tests Verbosely
+
+```bash
+go test ./... -v
+```
+
+### ✅ Run with Coverage Report
+
+```bash
+go test ./... -cover
+```
+
+### 📊 Generate HTML Coverage Report
+
+```bash
+go test ./... -coverprofile=coverage.out
+go tool cover -html=coverage.out
+```
+
+This opens an HTML page in your browser with detailed line-by-line coverage.
+
+
+---
+
 ## 🧪 VS Code REST Client – `requests.http`
 
 This project includes a `requests.http` file for use with the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
@@ -174,24 +202,24 @@ Open this file in VS Code and click **"Send Request"** above each block to test.
 quote-book/
 ├── cmd/
 │   └── main.go
+├── docs/
+│   ├── docs.go
+│   ├── swagger.json
+│   └── swagger.yaml
 ├── internal/
 │   ├── handler/
+│   │   ├── handler_test.go
 │   │   └── handler.go
 │   ├── model/
 │   │   └── quote.go
 │   └── storage/
+│       ├── memory_test.go
 │       └── memory.go
-├── docs/                  # Swagger-generated files
-│   ├── docs.go
-│   ├── swagger.json
-│   └── swagger.yaml
-── test/                  # Unit tests for handlers, storage
-│   ├── handler_test.go
-│   └── storage_test.go
-├── requests.http          # For REST Client
-├── README.md
+├── coverage.out
 ├── go.mod
-└── go.sum
+├── go.sum
+├── README.md
+└── requests.http
 ```
 
 ---
