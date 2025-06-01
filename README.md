@@ -55,6 +55,24 @@ http://localhost:8080/swagger/index.html
 
 Interact with the API and explore endpoints.
 
+## 🚀 CI/CD: GitHub Actions
+
+This project includes a GitHub Actions workflow that runs on every push and pull request to the `main` branch.
+
+### 🔄 What it does:
+
+- Runs tests to ensure the code works correctly.
+- Generates the Swagger documentation using `swag init`.
+- Uploads the generated Swagger docs as an artifact named `swagger-docs`.
+
+You can find the workflow config here:
+
+```
+.github/workflows/ci.yml
+```
+
+After the workflow completes, the generated Swagger documentation is available in the **Actions** tab as a downloadable artifact.
+
 ---
 
 ## 🔌 API Endpoints
@@ -200,6 +218,9 @@ Open this file in VS Code and click **"Send Request"** above each block to test.
 
 ```
 quote-book/
+├── .github/
+│   └── workflows/
+│       └── ci.yml   
 ├── cmd/
 │   └── main.go
 ├── docs/
